@@ -75,5 +75,6 @@ type eventLoop struct {
   }
   
   func (l *eventLoop) AwaitFinish() {
-	
+	l.Post(stopCommand{})
+    <-l.stopSignal
   }
