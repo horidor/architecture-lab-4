@@ -11,6 +11,7 @@ func main() {
 		scanner := bufio.NewScanner(input)
 		for scanner.Scan() {
 			commandToParse := scanner.Text()
+			println(commandToParse)
 		}
 	}
 }
