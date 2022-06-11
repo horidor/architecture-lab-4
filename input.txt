@@ -1,3 +1,3 @@
-print [PRINT1]
-cat Event- Loop
-print [PRINT2]
+print comanda golang chads
+cat laboratory-work- 4
+print predstavlyae

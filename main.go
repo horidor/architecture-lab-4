@@ -8,6 +8,7 @@ import (
 )
 
 func main() {
+	eventLoop := new(engine.EventLoop)
 	eventLoop.Start()
 
 	if input, err := os.Open("input.txt"); err == nil {
@@ -15,7 +16,7 @@ func main() {
 	 	scanner := bufio.NewScanner(input)
 	 	for scanner.Scan() {
 	 		commandToParse := scanner.Text()
-	 		eventLoop.Post(Parse(commandToParse))
+	 		eventLoop.Post(engine.Parse(commandToParse))
 	 	}
 	}
 
