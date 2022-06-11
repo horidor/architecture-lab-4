@@ -52,13 +52,13 @@ func (q *Queue) empty() bool {
 	return len(q.cmdArray) == 0
 }
 
-type eventLoop struct {
+type EventLoop struct {
 	cmdQ          *Queue
 	stopSignal  chan struct{}
 	stop bool
   }
 
-  func (l *eventLoop) Start() {
+  func (l *EventLoop) Start() {
 	l.cmdQ = &Queue{signalToAwait: make(chan struct{})}
 	l.stopSignal = make(chan struct{})
 	go func() {
@@ -70,11 +70,11 @@ type eventLoop struct {
 	}()
   }
   
-  func (l *eventLoop) Post(cmd Command) {
+  func (l *EventLoop) Post(cmd Command) {
 	l.cmdQ.push(cmd)
   }
   
-  func (l *eventLoop) AwaitFinish() {
+  func (l *EventLoop) AwaitFinish() {
 	l.Post(stopCommand{})
     <-l.stopSignal
   }
