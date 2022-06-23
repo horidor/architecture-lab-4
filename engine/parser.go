@@ -4,12 +4,9 @@ import (
 	"strings"
 )
 
-func Parse (toParse string) Command {
+func Parse (toParse string) command {
 	args := strings.Fields(toParse)
 
-	if len(args) < 2 {
-		return &PrintCommand{"syntax error: not enough arguments"}
-	}
 
 
 	cmd := args[0]
@@ -17,18 +14,24 @@ func Parse (toParse string) Command {
 
 	switch cmd {
 	case "print":
+		if len(args) < 2 {
+			return &printCommand{"syntax error: not enough arguments"}
+		}
 		message := strings.Join(cmdargs, " ")
-		return &PrintCommand{message}
+		return &printCommand{message}
 
 	case "cat":
 		if len(cmdargs) != 2 {
-			return &PrintCommand{"syntax error: invalid arguments"}
+			return &printCommand{"syntax error: invalid arguments"}
 		}
 
-		return &CatCommand{cmdargs[0], cmdargs[1]}
+		return &catCommand{cmdargs[0], cmdargs[1]}
 	
+	case "stop":
+
+		return &stopCommand{};
 	default:
-		return &PrintCommand{"syntax error: invalid command"}
+		return &printCommand{"syntax error: invalid command"}
 
 	}
 }

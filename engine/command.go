@@ -4,26 +4,26 @@ import (
 	"fmt"
 )
 
-type PrintCommand struct {
+type printCommand struct {
 	Arg string
 }
 
-func (print *PrintCommand) Execute(loop Handler) {
+func (print *printCommand) Execute(loop handler) {
 	fmt.Println(print.Arg)
 }
 
-type CatCommand struct {
+type catCommand struct {
 	Arg1 string
 	Arg2 string
 }
 
-func (pcc *CatCommand) Execute(handler Handler) {
+func (pcc *catCommand) Execute(Handler handler) {
 	res := pcc.Arg1 + pcc.Arg2
-	handler.Post(&PrintCommand{Arg: res})
+	Handler.Post(&printCommand{Arg: res})
 }
 
 type stopCommand struct{}
 
-func (s stopCommand) Execute(h Handler) {
+func (s stopCommand) Execute(h handler) {
   h.(*EventLoop).stop = true
 }
