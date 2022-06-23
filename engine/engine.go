@@ -2,6 +2,7 @@ package engine
 
 import (
 	"sync"
+	"fmt"
 )
 
 type command interface {
@@ -9,7 +10,7 @@ type command interface {
 }
 
 type handler interface {
-	Post(cmd command)
+	Post(cmd command) (error)
 }
 
 type queue struct {
@@ -70,8 +71,13 @@ type EventLoop struct {
 	}()
   }
   
-  func (l *EventLoop) Post(cmd command) {
+  func (l *EventLoop) Post(cmd command) (error) {
+	if l.stop == true {
+		return fmt.Errorf("Unexpected command after eventloop finish")
+	}
+
 	l.cmdQ.push(cmd)
+	return nil
   }
   
   func (l *EventLoop) AwaitFinish() {
